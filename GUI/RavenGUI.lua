@@ -218,7 +218,6 @@ local function animate(Parent, onlyrainbow)
     local s, kpt = ColorSequence.new, ColorSequenceKeypoint.new
     local gradient2 = Instance.new("UIGradient")
     gradient2.Parent = Parent
-    local create = game:GetService("TweenService"):Create(gradient2, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), { Offset = Vector2.new(1, 0) })
     gradient2.Color = s({
         kpt(0, list[#list]),
         kpt(0.5, list[#list - 1]),
@@ -245,6 +244,8 @@ local function animate(Parent, onlyrainbow)
             kpt(1, status and second or gradient2.Color.Keypoints[3].Value),
         })
         status = not status
+        -- Recreate the tween each iteration for proper animation
+        local create = game:GetService("TweenService"):Create(gradient2, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), { Offset = Vector2.new(1, 0) })
         create:Play()
         create.Completed:Wait()
     until gradient2 == nil
@@ -715,7 +716,7 @@ spawn(function()
     addblurtoobject(shared.TargetHud)
 end)
 
-function lib:CreateWindow(text, Position)
+function lib:CreateWindow(text, Position, icon)
     local TopFrame = Instance.new("Frame")
     local TabName = Instance.new("TextLabel")
     local TabTextPadding = Instance.new("UIPadding")
@@ -1204,6 +1205,11 @@ function lib:CreateWindow(text, Position)
                 end
             end
 
+            -- Initialize GUISaveSettings for this window if not already done
+            if GUISaveSettings[OptionsName()] == nil then
+                GUISaveSettings[OptionsName()] = {}
+            end
+            
             GUISaveSettings[OptionsName()][options.Name] = {}
             GUISaveSettings[OptionsName()][options.Name]["Value"] = options.DefaultOption
 
@@ -1392,6 +1398,11 @@ function lib:CreateWindow(text, Position)
                 end
             end
 
+            -- Initialize GUISaveSettings for this window if not already done
+            if GUISaveSettings[OptionsName()] == nil then
+                GUISaveSettings[OptionsName()] = {}
+            end
+            
             GUISaveSettings[OptionsName()][options.Name] = options.Default
 
             --[[if options.Default == true or options.Default == false then
@@ -1589,6 +1600,11 @@ function lib:CreateWindow(text, Position)
                 StartingState = false,
                 Callback = function() end
             }, options)
+            
+            -- Initialize GUISaveSettings for this window if not already done
+            if GUISaveSettings[OptionsName()] == nil then
+                GUISaveSettings[OptionsName()] = {}
+            end
             
             if GUILoadSettings[OptionsName()] ~= nil then
                 if GUILoadSettings[OptionsName()][options.Name] ~= nil then
