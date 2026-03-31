@@ -106,38 +106,80 @@ end
 function RavenBS:LoadModules()
     local modulePath = shared.devtesting and "Raven-BS-4-roblox" or RAW_BASE_URL
     local strings = {
-        api = "https://raw.githubusercontent.com/realcarti01/Bedwars-API/refs/heads/main/BedwarsAPI.lua",  -- ADD THIS LINE
+        api = "https://raw.githubusercontent.com/realcarti01/Bedwars-API/refs/heads/main/BedwarsAPI.lua",
         functions = modulePath .. "/Functions/" .. self.GameName .. "functions.lua",
         gui = modulePath .. "/GUI/RavenGUI.lua",
         buttons = modulePath .. "/Functions/Buttonfunctions.lua",
         games = modulePath .. "/Games/" .. self.GameName .. ".lua"
     }
     
+    print("[RavenBS Loader] Loading API from:", strings.api)
+    print("[RavenBS Loader] Loading functions from:", strings.functions)
+    
     local success, result = pcall(function()
         if shared.devtesting then
-            API = loadstring(readfile(strings.api))()
-            module = loadstring(readfile(strings.functions))()
+            print("[RavenBS Loader] Loading from local files (dev mode)")
+            local apiCode = readfile(strings.api)
+            if not apiCode then error("Failed to read API file") end
+            API = loadstring(apiCode)()
+            if not API then error("Failed to execute API code") end
+            
+            local funcCode = readfile(strings.functions)
+            if not funcCode then error("Failed to read functions file") end
+            module = loadstring(funcCode)()
+            if not module then error("Failed to execute functions code") end
         else
-            API = loadstring(game:HttpGet(strings.api))()
-            module = loadstring(game:HttpGet(strings.functions))()
+            print("[RavenBS Loader] Loading from GitHub")
+            local apiCode = game:HttpGet(strings.api)
+            if not apiCode then error("Failed to get API from GitHub") end
+            API = loadstring(apiCode)()
+            if not API then error("Failed to execute API code") end
+            
+            local funcCode = game:HttpGet(strings.functions)
+            if not funcCode then error("Failed to get functions from GitHub") end
+            module = loadstring(funcCode)()
+            if not module then error("Failed to execute functions code") end
         end
     end)
     
     if not success then
-        print("Failed to load modules: " .. tostring(result))
+        warn("[RavenBS ERROR] Failed to load core modules: " .. tostring(result))
         return nil
     end
     
+    print("[RavenBS Loader] Core modules loaded successfully")
+    
     if shared.devtesting then
-        lib = loadstring(readfile(strings.gui))()
-        buttons = loadstring(readfile(strings.buttons))()
-        loadstring(readfile(strings.games))()
+        local guiCode = readfile(strings.gui)
+        if not guiCode then error("Failed to read GUI file") end
+        lib = loadstring(guiCode)()
+        if not lib then error("Failed to execute GUI code") end
+        
+        local buttonCode = readfile(strings.buttons)
+        if not buttonCode then error("Failed to read buttons file") end
+        buttons = loadstring(buttonCode)()
+        if not buttons then error("Failed to execute buttons code") end
+        
+        local gameCode = readfile(strings.games)
+        if not gameCode then error("Failed to read game file") end
+        loadstring(gameCode)()
     else
-        lib = loadstring(game:HttpGet(strings.gui))()
-        buttons = loadstring(game:HttpGet(strings.buttons))()
-        loadstring(game:HttpGet(strings.games))()
+        local guiCode = game:HttpGet(strings.gui)
+        if not guiCode then error("Failed to get GUI from GitHub") end
+        lib = loadstring(guiCode)()
+        if not lib then error("Failed to execute GUI code") end
+        
+        local buttonCode = game:HttpGet(strings.buttons)
+        if not buttonCode then error("Failed to get buttons from GitHub") end
+        buttons = loadstring(buttonCode)()
+        if not buttons then error("Failed to execute buttons code") end
+        
+        local gameCode = game:HttpGet(strings.games)
+        if not gameCode then error("Failed to get game file from GitHub") end
+        loadstring(gameCode)()
     end
     
+    print("[RavenBS Loader] All modules loaded successfully")
     return lib
 end
 
@@ -148,22 +190,40 @@ function RavenBS:Initialize()
     end
 
     if not self:CheckExecutorSupport() then
-        return
+        warn("[RavenBS] Executor not supported")
+        return nil
     end
 
     self:SetupDirectories()
     self:DownloadFonts()
 
     if self:DetectGame() then
-        print("see what could happen here")
+        print("[RavenBS] Game detected:", self.GameName)
         shared.RavenConfigName = "RavenBS/Config/" .. self.ConfigName
         shared.RavenBSInjected = true
-        return self:LoadModules()
+        local result = self:LoadModules()
+        if not result then
+            error("[RavenBS CRITICAL] LoadModules returned nil!")
+            return nil
+        end
+        print("[RavenBS] Initialization complete!")
+        return result
+    else
+        warn("[RavenBS] Game not supported")
+        return nil
     end
 end
 
 local raven = RavenBS.new()
+print("[RavenBS Loader] Initializing RavenBS...")
 local lib = raven:Initialize()
+
+if not lib then
+    error("[RavenBS CRITICAL] lib is nil! Initialization failed.")
+    return
+end
+
+print("[RavenBS Loader] lib loaded successfully:", lib ~= nil)
 local teleportactive = false
 spawn(function()
     repeat task.wait(0.1) until LocalPlayer ~= nil

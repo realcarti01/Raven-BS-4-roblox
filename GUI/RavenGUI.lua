@@ -44,6 +44,20 @@ local TweenService = game:GetService("TweenService")
 local ModuleNotification = false
 local allToggles = {} -- Table to store all toggle objects
 
+-- Helper function for safe font loading with fallback
+local function LoadFont(assetPath)
+    local success, result = pcall(function()
+        return Font.new(getcustomasset(assetPath))
+    end)
+    
+    if success and result then
+        return result, true
+    else
+        warn("[RavenBS] Failed to load font from", assetPath, "- using fallback")
+        return nil, false
+    end
+end
+
 
 -- At the top of the script, define the config file name and initialize variables
 local HttpService = game:GetService("HttpService")
@@ -602,7 +616,7 @@ spawn(function()
     shared.TargetColor.BorderSizePixel = 0
     shared.TargetColor.Position = UDim2.new(0.0432427935, 0, 0.0800000802, 0)
     shared.TargetColor.Size = UDim2.new(0.083, 0, 0.449999988, 0)
-    shared.TargetColor.FontFace = Font.new(getcustomasset("RavenB4/MCBold.json"))
+    shared.TargetColor.FontFace = Font.new(getcustomasset("RavenBS/MCBold.json"))
     shared.TargetColor.Text = "W"
     shared.TargetColor.TextColor3 = Color3.fromRGB(255, 255, 255)
     shared.TargetColor.TextSize = textsize
@@ -873,7 +887,14 @@ function lib:CreateWindow(text, Position)
         MainButton.BorderSizePixel = 0
         MainButton.Size = UDim2.new(1, 0, 0, sizingtable.MainButton)
         print("[RavenBS] Creating toggle:", options.Name)
-        MainButton.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
+        
+        local mainFont = LoadFont("RavenBS/MCReg.json")
+        if mainFont then
+            MainButton.FontFace = mainFont
+        else
+            MainButton.Font = Enum.Font.GothamBold
+        end
+        
         MainButton.Text = options.Name
         MainButton.TextColor3 = Color3.fromRGB(255, 255, 255)
         MainButton.TextSize = sizingtable.MainButtonText
@@ -1018,8 +1039,10 @@ function lib:CreateWindow(text, Position)
                 end
             end)
             Toggle.Connections[#Toggle.Connections + 1] = MainButton.MouseButton2Click:Connect(function()
+                print("[RavenBS] Right-click on", options.Name, "- toggling MiniHolderFrame visibility from", MiniHolderFrame.Visible, "to", not MiniHolderFrame.Visible)
                 MiniHolderFrame.Visible = not MiniHolderFrame.Visible
                 Bind.Visible = not Bind.Visible
+                print("[RavenBS] MiniHolderFrame now visible?", MiniHolderFrame.Visible)
             end)
             Toggle.Connections[#Toggle.Connections + 1] = MainButton.MouseEnter:Connect(function()
                 MainButton.BackgroundTransparency = 0.7
@@ -1187,7 +1210,9 @@ function lib:CreateWindow(text, Position)
             end)
             
             if not success then
-                warn("[RavenBS ERROR] Failed to load font for dropdown:", fontResult)
+                warn("[RavenBS ERROR] Failed to load custom font for dropdown:", fontResult)
+                warn("[RavenBS] Using fallback font (GothamBold)")
+                TextButton.Font = Enum.Font.GothamBold
             else
                 warn("[RavenBS DEBUG] Font loaded successfully")
                 TextButton.FontFace = fontResult
@@ -1515,7 +1540,17 @@ function lib:CreateWindow(text, Position)
             MiniButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
             MiniButton.BorderSizePixel = 0
             MiniButton.Size = UDim2.new(1, 0, 0, sizingtable.Minibutton)
-            MiniButton.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
+            
+            local minibuttonFontSuccess, minibuttonFont = pcall(function()
+                return Font.new(getcustomasset("RavenBS/MCReg.json"))
+            end)
+            
+            if minibuttonFontSuccess and minibuttonFont then
+                MiniButton.FontFace = minibuttonFont
+            else
+                MiniButton.Font = Enum.Font.GothamBold
+            end
+            
             MiniButton.Text = "[-]"
             MiniButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             MiniButton.TextSize = sizingtable.MinibuttonText
