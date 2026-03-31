@@ -1,15 +1,3 @@
---[[
-██████╗  █████╗ ██╗   ██╗███████╗███╗   ██╗    ██████╗ ██╗  ██╗
-██╔══██╗██╔══██╗██║   ██║██╔════╝████╗  ██║    ██╔══██╗██║  ██║
-██████╔╝███████║██║   ██║█████╗  ██╔██╗ ██║    ██████╔╝███████║
-██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║    ██╔══██╗╚════██║
-██║  ██║██║  ██║ ╚████╔╝ ███████╗██║ ╚████║    ██████╔╝     ██║
-╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝    ╚═════╝      ╚═╝
-Author: Ace (or Ace-B4)
-Language: Lua
-Category: GUI
-]]
-
 FlyCounter = buttons.FlyCounter
 FlyCounterInner = buttons.FlyCounterInner
 FlyCounterText = buttons.FlyCounterText
@@ -539,7 +527,6 @@ Autoclicker:CreateToggle({
 })
 
  --maybe this will make it hit farther? (update: this is stupid, it does not work) -> anyone claiming reach gives even a slight advantage (yes even vape) is lying. -> it "gives" better hits because the localscript registeres the attack further away but when the server checks the attack, its not going to matter since modulescripts are server-sided and the server checks the distance of the attack. -> so this is just stupid
---[[
 Reach = Combat:CreateToggle({
 	Name = "Reach",
 	Callback = function(Callback)
@@ -1030,7 +1017,7 @@ FlyButton.MouseButton1Click:Connect(function()
 		end)
 	end
 end)
---[[
+
 local function ShootProjectile(Item, Projectile, NearestPOS)
 	local Args = {
 		[1] = Item,
