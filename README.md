@@ -1,11 +1,11 @@
 <div align="center">
   
-# Raven B4 For Roblox
+# Raven BS For Roblox
 
 [![License](https://img.shields.io/badge/license-CC0%201.0-green)](LICENSE)
 [![Language](https://img.shields.io/badge/language-Lua-blue?)](https://www.lua.org/)
 
-Completely rewritten from scratch with the help of infinity yield and old raven B4 sources.
+Completely rewritten from scratch with the help of infinity yield and old raven BS sources.
 
 <a href="https://discord.gg/4SpwqN979V"><img src="https://invidget.switchblade.xyz/4SpwqN979V" alt="https://discord.gg/4SpwqN979V"/></a><br>
 
@@ -21,7 +21,7 @@ Completely rewritten from scratch with the help of infinity yield and old raven 
 
 **Copy and paste the following loadstring and execute the script:**
    ```lua
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/Ace-B4/Raven-B4-For-Roblox/refs/heads/main/Raven%20B4%20Loader.lua"))()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/realcarti01/Raven-BS-4-roblox/refs/heads/main/Raven%20BS%20Loader.lua"))()
    ```
 
 **Press `Right Shift`**
@@ -29,7 +29,7 @@ Completely rewritten from scratch with the help of infinity yield and old raven 
 
 ## 👏 Credits
 
-**Blowsy/Chef/Hevex** - Original creator of Raven B4
+**Blowsy/Chef/Hevex** - Original creator of Raven BS
 
 **UI Blur** - [Roblox DevForum](https://devforum.roblox.com/t/ui-blur-automatic/2402850)
 
@@ -37,14 +37,14 @@ Completely rewritten from scratch with the help of infinity yield and old raven 
 
 **Infinity yield** - Used to decompile scripts and view remotes
 
-*If you believe Raven B4 used your code without credit and want it removed or attributed, file an issue with evidence*
+*If you believe Raven BS used your code without credit and want it removed or attributed, file an issue with evidence*
 
 ---
 
 
 <div align="center">
   
-Made with ❤️ by the Raven B4 Team
+Made with ❤️ by the Raven BS Team
 
 </div>
 </div>

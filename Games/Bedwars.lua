@@ -1910,7 +1910,7 @@ FPSBoost:CreateToggle({
 	end
 })
 local Messages = {
-	"RavenB4",
+	"RavenBS",
 	"AC?",
 	"What AC?",
 	"Devs?",
@@ -2315,7 +2315,7 @@ blockCountLabel.Parent = shared.ScreenGui2
 blockCountLabel.BackgroundTransparency = 1
 blockCountLabel.Position = UDim2.new(0.515, 0, 0.429, 0)
 blockCountLabel.Size = UDim2.new(0, 122, 0, 30)
-blockCountLabel.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+blockCountLabel.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
 blockCountLabel.Text = "Blocks: 0"
 blockCountLabel.TextColor3 = Color3.new(1, 1, 1)
 blockCountLabel.TextSize = 20
@@ -2569,6 +2569,5 @@ Utility:CreateToggle({
 	end
 })
 
-if shared.RavenB4Started == nil then
-	shared.RavenB4Completed = true
-end
+if shared.RavenBSStarted == nil then
+	shared.RavenBSCompleted = true
