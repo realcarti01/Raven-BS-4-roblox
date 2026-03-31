@@ -5,16 +5,16 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-local BASE_URL = "https://github.com/Ace-B4/Raven-B4-For-Roblox/raw/refs/heads/main/"
-local RAW_BASE_URL = "https://raw.githubusercontent.com/Ace-B4/Raven-B4-For-Roblox/refs/heads/main"
-local RavenB4 = {}
-RavenB4.__index = RavenB4
+local BASE_URL = "https://github.com/realcarti01/Raven-BS-4-roblox/raw/refs/heads/main/"
+local RAW_BASE_URL = "https://raw.githubusercontent.com/realcarti01/Raven-BS-4-roblox/refs/heads/main"
+local RavenBS = {}
+RavenBS.__index = RavenBS
 
-function RavenB4.new()
-    local self = setmetatable({}, RavenB4)
-    self.ConfigPath = "RavenB4/Config"
-    self.LoadFontPath = "RavenB4"
-    self.FontPath = "RavenB4/Font"
+function RavenBS.new()
+    local self = setmetatable({}, RavenBS)
+    self.ConfigPath = "RavenBS/Config"
+    self.LoadFontPath = "RavenBS"
+    self.FontPath = "RavenBS/Font"
     self.GameName = ""
     self.ConfigName = "Default Config"
     self.SupportedGames = {
@@ -30,15 +30,15 @@ function RavenB4.new()
     return self
 end
 
-function RavenB4:CheckExecutorSupport()
+function RavenBS:CheckExecutorSupport()
     if not (writefile and readfile and makefolder and isfolder) then
-        Players.LocalPlayer:Kick("Executor is not supported, please use another executor for Raven B4!")
+        Players.LocalPlayer:Kick("Executor is not supported, please use another executor for Raven BS!")
         return false
     end
     return true
 end
 
-function RavenB4:SetupDirectories()
+function RavenBS:SetupDirectories()
     if not isfolder(self.FontPath) then
         makefolder(self.FontPath)
     end
@@ -47,7 +47,7 @@ function RavenB4:SetupDirectories()
     end
 end
 
-function RavenB4:DownloadFonts()
+function RavenBS:DownloadFonts()
     local fonts = {
         {name = "MCBold", url = BASE_URL .. "MCBold.otf", config = "MCBold.json"},
         {name = "MCReg", url = BASE_URL .. "MCReg.otf", config = "MCReg.json"}
@@ -70,7 +70,7 @@ function RavenB4:DownloadFonts()
     end
 end
 
-function RavenB4:WriteFontConfig(fontName, configFile)
+function RavenBS:WriteFontConfig(fontName, configFile)
     local config = {
         name = "Minecraft",
         faces = {{
@@ -83,11 +83,11 @@ function RavenB4:WriteFontConfig(fontName, configFile)
     writefile(self.LoadFontPath .. "/" .. configFile, HttpService:JSONEncode(config))
 end
 
-function RavenB4:DetectGame()
+function RavenBS:DetectGame()
     for gameName, placeIds in pairs(self.SupportedGames) do
         if table.find(placeIds, game.PlaceId) then
             self.GameName = gameName
-            self.ConfigName = "Raven B4 " .. gameName .. ".json"
+            self.ConfigName = "Raven BS" .. gameName .. ".json"
             return true
         end
     end
@@ -103,10 +103,10 @@ function stringload(arg1)
     end
 end
 
-function RavenB4:LoadModules()
-    local modulePath = shared.devtesting and "Raven-B4-For-Roblox" or RAW_BASE_URL
+function RavenBS:LoadModules()
+    local modulePath = shared.devtesting and "Raven-BS-4-roblox" or RAW_BASE_URL
     local strings = {
-        api = "https://raw.githubusercontent.com/Ace-B4/Bedwars-API/refs/heads/main/BedwarsAPI.lua",  -- ADD THIS LINE
+        api = "https://raw.githubusercontent.com/realcarti01/Bedwars-API/refs/heads/main/BedwarsAPI.lua",  -- ADD THIS LINE
         functions = modulePath .. "/Functions/" .. self.GameName .. "functions.lua",
         gui = modulePath .. "/GUI/RavenGUI.lua",
         buttons = modulePath .. "/Functions/Buttonfunctions.lua",
@@ -142,9 +142,9 @@ function RavenB4:LoadModules()
 end
 
 
-function RavenB4:Initialize()
-    if shared.RavenB4Injected then
-        error("RavenB4 is already injected!")
+function RavenBS:Initialize()
+    if shared.RavenBSInjected then
+        error("RavenBS is already injected!")
     end
 
     if not self:CheckExecutorSupport() then
@@ -156,24 +156,24 @@ function RavenB4:Initialize()
 
     if self:DetectGame() then
         print("see what could happen here")
-        shared.RavenConfigName = "RavenB4/Config/" .. self.ConfigName
-        shared.RavenB4Injected = true
+        shared.RavenConfigName = "RavenBS/Config/" .. self.ConfigName
+        shared.RavenBSInjected = true
         return self:LoadModules()
     end
 end
 
-local raven = RavenB4.new()
+local raven = RavenBS.new()
 local lib = raven:Initialize()
 local teleportactive = false
 spawn(function()
     repeat task.wait(0.1) until LocalPlayer ~= nil
     LocalPlayer.OnTeleport:Connect(function()
-        if shared.RavenB4Injected and teleportactive ~= true then --prevents multiple injections when testing
+        if shared.RavenBSInjected and teleportactive ~= true then --prevents multiple injections when testing
             teleportactive = true
             if shared.devtesting then 
-                queue_on_teleport('loadstring(readfile("Raven-B4-For-Roblox/Raven B4 Loader.lua"))()')
+                queue_on_teleport('loadstring(readfile("Raven-BS-4-roblox/Raven BS Loader.lua"))()')
             else
-                queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/Near-B4/Raven-B4-For-Roblox/refs/heads/main/Raven%20B4%20Loader.lua"))()')
+                queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/realcarti01/Raven-BS-4-roblox/refs/heads/main/Raven%20BS%20Loader.lua"))()')
             end
         end
     end)
