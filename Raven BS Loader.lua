@@ -116,25 +116,40 @@ function RavenBS:LoadModules()
     print("[RavenBS Loader] Loading API from:", strings.api)
     print("[RavenBS Loader] Loading functions from:", strings.functions)
     
-    local success, result = pcall(function()
+    -- Try to load API, but make it optional
+    local apiLoaded = false
+    local apiSuccess, apiResult = pcall(function()
         if shared.devtesting then
-            print("[RavenBS Loader] Loading from local files (dev mode)")
             local apiCode = readfile(strings.api)
-            if not apiCode then error("Failed to read API file") end
-            API = loadstring(apiCode)()
-            if not API then error("Failed to execute API code") end
-            
+            if apiCode and #apiCode > 0 then
+                API = loadstring(apiCode)()
+                if API then apiLoaded = true end
+            end
+        else
+            local apiCode = game:HttpGet(strings.api)
+            if apiCode and #apiCode > 0 then
+                API = loadstring(apiCode)()
+                if API then apiLoaded = true end
+            end
+        end
+    end)
+    
+    if not apiLoaded then
+        warn("[RavenBS Loader] API loading failed or not available - using minimal fallback")
+        warn("[RavenBS Loader] API path:", strings.api)
+        API = {} -- Minimal fallback API
+    else
+        print("[RavenBS Loader] API loaded successfully")
+    end
+    
+    -- Load functions (required)
+    local funcSuccess, funcResult = pcall(function()
+        if shared.devtesting then
             local funcCode = readfile(strings.functions)
             if not funcCode then error("Failed to read functions file") end
             module = loadstring(funcCode)()
             if not module then error("Failed to execute functions code") end
         else
-            print("[RavenBS Loader] Loading from GitHub")
-            local apiCode = game:HttpGet(strings.api)
-            if not apiCode then error("Failed to get API from GitHub") end
-            API = loadstring(apiCode)()
-            if not API then error("Failed to execute API code") end
-            
             local funcCode = game:HttpGet(strings.functions)
             if not funcCode then error("Failed to get functions from GitHub") end
             module = loadstring(funcCode)()
@@ -142,8 +157,8 @@ function RavenBS:LoadModules()
         end
     end)
     
-    if not success then
-        warn("[RavenBS ERROR] Failed to load core modules: " .. tostring(result))
+    if not funcSuccess then
+        error("[RavenBS CRITICAL] Failed to load game functions: " .. tostring(funcResult))
         return nil
     end
     
