@@ -1141,7 +1141,7 @@ function lib:CreateWindow(text, Position)
             TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
             TextButton.BorderSizePixel = 0
             TextButton.Size = UDim2.new(1, 0, 0, 25)
-            TextButton.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+            TextButton.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
             TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             TextButton.TextSize = 14.000
             TextButton.TextXAlignment = Enum.TextXAlignment.Left
@@ -1218,7 +1218,7 @@ function lib:CreateWindow(text, Position)
                     until breaking
                 end)
             end
-        end -- Original Raven B4 doesn't have this, will see what I'll do with this!
+        end -- Original Raven BS doesn't have this, will see what I'll do with this!
 
         function Toggle:CreateInfo(text)
             local Info = Instance.new("TextLabel")
@@ -1462,7 +1462,7 @@ function lib:CreateWindow(text, Position)
             MiniButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
             MiniButton.BorderSizePixel = 0
             MiniButton.Size = UDim2.new(1, 0, 0, sizingtable.Minibutton)
-            MiniButton.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+            MiniButton.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
             MiniButton.Text = "[-]"
             MiniButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             MiniButton.TextSize = sizingtable.MinibuttonText
@@ -1479,7 +1479,7 @@ function lib:CreateWindow(text, Position)
             MiniButtonText.BorderSizePixel = 0
             MiniButtonText.Size = UDim2.new(1, 0, 1, 0)
             MiniButtonText.Font = Enum.Font.Fantasy
-            MiniButtonText.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+            MiniButtonText.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
             MiniButtonText.TextColor3 = Color3.fromRGB(255, 255, 255)
             MiniButtonText.TextSize = 14.000
             MiniButtonText.TextXAlignment = Enum.TextXAlignment.Left
@@ -1567,7 +1567,7 @@ local lineswidth = 3
 local textsize = 27.5
 local textboxsize = 0.15
 
-RavenB4WaterMark.Name = "Raven B4 WaterMark"
+RavenB4WaterMark.Name = "Raven BS WaterMark"
 RavenB4WaterMark.Parent = ScreenGUIFrame
 RavenB4WaterMark.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 RavenB4WaterMark.BackgroundTransparency = 1.000
@@ -1609,7 +1609,7 @@ RightSideRaven.BorderSizePixel = 0
 RightSideRaven.Position = UDim2.new(2, 0, 0, 0)
 RightSideRaven.Size = UDim2.new(0, lineswidth, 1.015, 0)
 
-RavenTextB4.Name = "RavenTextB4"
+RavenTextB4.Name = "RavenTextBS"
 RavenTextB4.Parent = RavenB4WaterMark
 RavenTextB4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 RavenTextB4.BackgroundTransparency = 1.000
@@ -1618,15 +1618,15 @@ RavenTextB4.BorderSizePixel = 0
 RavenTextB4.Position = UDim2.new(1, 0, textboxsize*5, 0)
 RavenTextB4.Size = UDim2.new(1, 0, 0.25, 0)
 
-B4Letter.Name = "B4 Letter"
+B4Letter.Name = "BS Letter"
 B4Letter.Parent = RavenTextB4
 B4Letter.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 B4Letter.BackgroundTransparency = 1.000
 B4Letter.BorderColor3 = Color3.fromRGB(0, 0, 0)
 B4Letter.BorderSizePixel = 0
 B4Letter.Size = UDim2.new(1, 0, 1, 0)
-B4Letter.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
-B4Letter.Text = "B4"
+B4Letter.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
+B4Letter.Text = "BS"
 B4Letter.TextColor3 = Color3.fromRGB(255,255,255)
 B4Letter.TextSize = textsize
 
@@ -1646,7 +1646,7 @@ RLetter.BackgroundTransparency = 1.000
 RLetter.BorderColor3 = Color3.fromRGB(0, 0, 0)
 RLetter.BorderSizePixel = 0
 RLetter.Size = UDim2.new(1, 0,textboxsize , 0)
-RLetter.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+RLetter.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
 RLetter.Text = "r"
 RLetter.TextColor3 = Color3.fromRGB(255,255,255)
 RLetter.TextSize = textsize
@@ -1659,7 +1659,7 @@ ALetter.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ALetter.BorderSizePixel = 0
 ALetter.Position = UDim2.new(0, 0, textboxsize, 0)
 ALetter.Size = UDim2.new(1, 0, textboxsize, 0)
-ALetter.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+ALetter.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
 ALetter.Text = "a"
 ALetter.TextColor3 = Color3.fromRGB(255,255,255)
 ALetter.TextSize = textsize
@@ -1672,7 +1672,7 @@ VLetter.BorderColor3 = Color3.fromRGB(0, 0, 0)
 VLetter.BorderSizePixel = 0
 VLetter.Position = UDim2.new(0, 0, textboxsize*2, 0)
 VLetter.Size = UDim2.new(1, 0, textboxsize, 0)
-VLetter.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+VLetter.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
 VLetter.Text = "v"
 VLetter.TextColor3 = Color3.fromRGB(255,255,255)
 VLetter.TextSize = textsize
@@ -1685,7 +1685,7 @@ ELetter.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ELetter.BorderSizePixel = 0
 ELetter.Position = UDim2.new(0, 0, textboxsize*3, 0)
 ELetter.Size = UDim2.new(1, 0, textboxsize, 0)
-ELetter.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+ELetter.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
 ELetter.Text = "e"
 ELetter.TextColor3 = Color3.fromRGB(255,255,255)
 ELetter.TextSize = textsize
@@ -1698,7 +1698,7 @@ NLetter.BorderColor3 = Color3.fromRGB(0, 0, 0)
 NLetter.BorderSizePixel = 0
 NLetter.Position = UDim2.new(0, 0, textboxsize*4, 0)
 NLetter.Size = UDim2.new(1, 0, textboxsize, 0)
-NLetter.FontFace = Font.new(getcustomasset("RavenB4/MCReg.json"))
+NLetter.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
 NLetter.Text = "n"
 NLetter.TextColor3 = Color3.fromRGB(255,255,255)
 NLetter.TextSize = textsize
@@ -1775,10 +1775,10 @@ Credits.TextSize = 14.000
 Credits.TextXAlignment = Enum.TextXAlignment.Right
 
 --Tabs
-shared:createnotification("Press \"V\" or the Raven Icon to open the GUI!",3,"Raven B4 Loaded")
+shared:createnotification("Press \"V\" or the Raven Icon to open the GUI!",3,"Raven BS Loaded")
 
-shared.RavenB4TabName1 = shared.RavenB4TabName1 or "combat" -- litteraly only made this for the ps99 version, more will come sooner or later tbh
-Combat = lib:CreateWindow(shared.RavenB4TabName1,UDim2.new(0.03, 0, 0.1, 0),"15047268885")
+shared.RavenBSTabName1 = shared.RavenBSTabName1 or "combat" -- litteraly only made this for the ps99 version, more will come sooner or later tbh
+Combat = lib:CreateWindow(shared.RavenBSTabName1,UDim2.new(0.03, 0, 0.1, 0),"15047268885")
 Blatant = lib:CreateWindow("blatant",UDim2.new(0.23, 0, 0.1, 0),"15090672783")
 Render = lib:CreateWindow("render",UDim2.new(0.62, 0, 0.1, 0),"15090679835")
 Utility = lib:CreateWindow("utility",UDim2.new(0.82, 0, 0.1, 0),"15090688384")
@@ -1832,7 +1832,7 @@ GUIToggle:CreateToggle({
             if ScreenGUIFrame then ScreenGUIFrame:Destroy() end
             if Blur then Blur:Destroy() end
             -- Clear global state
-            shared.RavenB4Injected = false
+            shared.RavenBSInjected = false
             shared.ScreenGui2 = nil
             allToggles = {}
             GUISaveSettings = {}
@@ -1869,7 +1869,7 @@ GUIToggle:CreateToggle({
             if ScreenGUIFrame then ScreenGUIFrame:Destroy() end
             if Blur then Blur:Destroy() end
             -- Clear global state
-            shared.RavenB4Injected = false
+            shared.RavenBSInjected = false
             shared.ScreenGui2 = nil
             allToggles = {}
             GUISaveSettings = {}
@@ -1880,7 +1880,7 @@ GUIToggle:CreateToggle({
                     pcall(coroutine.close, thread)
                 end
             end
-            loadstring(readfile("RavenB4s/ActualClient/ravenloader.lua"))()
+            loadstring(readfile("RavenBS/ActualClient/ravenloader.lua"))()
         end
     end
 })
@@ -1924,7 +1924,7 @@ local raventag = Client:CreateToggle({
 					local getidplayer = Players:GetPlayerByUserId(message.TextSource.UserId)
 					if getidplayer and getidplayer.UserId == LocalPlayer.UserId then
                         if RavenTagEnabled then
-						    properties.PrefixText = "<font color='#692B97'>[RAVEN B4 USER]</font> " .. message.PrefixText
+						    properties.PrefixText = "<font color='#692B97'>[RAVEN BS USER]</font> " .. message.PrefixText
                         else
                             properties.PrefixText = message.PrefixText
                         end
