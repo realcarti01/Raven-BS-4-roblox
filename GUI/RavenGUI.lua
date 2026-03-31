@@ -872,10 +872,12 @@ function lib:CreateWindow(text, Position)
         MainButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
         MainButton.BorderSizePixel = 0
         MainButton.Size = UDim2.new(1, 0, 0, sizingtable.MainButton)
+        print("[RavenBS] Creating toggle:", options.Name)
         MainButton.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
         MainButton.Text = options.Name
         MainButton.TextColor3 = Color3.fromRGB(255, 255, 255)
         MainButton.TextSize = sizingtable.MainButtonText
+        print("[RavenBS] Toggle button created, HolderFrame exists?", HolderFrame ~= nil)
 
         MainButtonCorner.CornerRadius = UDim.new(0, 12)
         MainButtonCorner.Name = "TFCorner"
@@ -1107,8 +1109,20 @@ function lib:CreateWindow(text, Position)
                 Callback = function() end
             }, options)
 
-            if table.find(options.Options,options.DefaultOption) == nil then
-                options.DefaultOption = ""
+            -- Manually search for DefaultOption in Options table (table.find may not be available)
+            local foundOption = false
+            for _, v in ipairs(options.Options) do
+                if v == options.DefaultOption then
+                    foundOption = true
+                    break
+                end
+            end
+            if not foundOption and options.DefaultOption ~= "" then
+                if #options.Options > 0 then
+                    options.DefaultOption = options.Options[1]
+                else
+                    options.DefaultOption = ""
+                end
             end
             if GUILoadSettings[OptionsName()] ~= nil then
                 if GUILoadSettings[OptionsName()][options.Name] ~= nil then
@@ -1119,33 +1133,72 @@ function lib:CreateWindow(text, Position)
             GUISaveSettings[OptionsName()][options.Name] = {}
             GUISaveSettings[OptionsName()][options.Name]["Value"] = options.DefaultOption
 
-            local DefaultOptionPOS
+            local DefaultOptionPOS = 1
             local Listsize = #(options.Options)
-            if options.DefaultOption ~= "" then
-                for i,v in pairs(options.Options) do
+            
+            -- Handle empty options list
+            if Listsize == 0 then
+                options.DefaultOption = ""
+            elseif options.DefaultOption ~= "" then
+                -- Find the default option in the list
+                for i,v in ipairs(options.Options) do
                     if v == options.DefaultOption then
                         DefaultOptionPOS = i
+                        break
                     end
                 end
             else
+                -- DefaultOption is empty, use first option
                 DefaultOptionPOS = 1
-                options.DefaultOption = options.Options[DefaultOptionPOS]
+                options.DefaultOption = options.Options[1] or ""
+            end
+            
+            -- Ensure DefaultOptionPOS is valid
+            if DefaultOptionPOS > Listsize then
+                DefaultOptionPOS = 1
+            end
+            if DefaultOptionPOS < 1 then
+                DefaultOptionPOS = 1
             end
 
             local TextButton = Instance.new("TextButton")
             local UIPadding = Instance.new("UIPadding")
             local breaking = false
+            
+            warn("[RavenBS DEBUG] CreateDropDown - Name:", options.Name, "Options:", #options.Options, "DefaultOption:", options.DefaultOption)
+            local miniHolderVisible = MiniHolderFrame and MiniHolderFrame.Visible or false
+            warn("[RavenBS DEBUG] MiniHolderFrame exists?", MiniHolderFrame ~= nil, "MiniHolderFrame visible?", miniHolderVisible)
+            
+            if not MiniHolderFrame then
+                error("[RavenBS ERROR] MiniHolderFrame is nil!")
+                return
+            end
+            
             TextButton.Parent = MiniHolderFrame
             TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             TextButton.BackgroundTransparency = 1.000
             TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
             TextButton.BorderSizePixel = 0
             TextButton.Size = UDim2.new(1, 0, 0, 25)
-            TextButton.FontFace = Font.new(getcustomasset("RavenBS/MCReg.json"))
+            
+            warn("[RavenBS DEBUG] Attempting to load font for dropdown:", options.Name)
+            local success, fontResult = pcall(function()
+                return Font.new(getcustomasset("RavenBS/MCReg.json"))
+            end)
+            
+            if not success then
+                warn("[RavenBS ERROR] Failed to load font for dropdown:", fontResult)
+            else
+                warn("[RavenBS DEBUG] Font loaded successfully")
+                TextButton.FontFace = fontResult
+            end
+            
             TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
             TextButton.TextSize = 14.000
             TextButton.TextXAlignment = Enum.TextXAlignment.Left
             TextButton.Text = options.Name .. ": " .. options.DefaultOption
+            
+            warn("[RavenBS DEBUG] TextButton created for dropdown:", options.Name, "Text:", TextButton.Text)
             
             UIPadding.Parent = TextButton
             UIPadding.PaddingLeft = UDim.new(0, 15)
@@ -1778,12 +1831,25 @@ Credits.TextXAlignment = Enum.TextXAlignment.Right
 shared:createnotification("Press \"V\" or the Raven Icon to open the GUI!",3,"Raven BS Loaded")
 
 shared.RavenBSTabName1 = shared.RavenBSTabName1 or "combat" -- litteraly only made this for the ps99 version, more will come sooner or later tbh
+print("[RavenBS] Creating windows...")
+print("[RavenBS] lib object:", lib, "type:", type(lib))
+print("[RavenBS] lib.CreateWindow:", lib.CreateWindow, "exists?", lib.CreateWindow ~= nil)
+
 Combat = lib:CreateWindow(shared.RavenBSTabName1,UDim2.new(0.03, 0, 0.1, 0),"15047268885")
+print("[RavenBS] Combat window created:", Combat ~= nil)
+
 Blatant = lib:CreateWindow("blatant",UDim2.new(0.23, 0, 0.1, 0),"15090672783")
+print("[RavenBS] Blatant window created:", Blatant ~= nil)
+
 Render = lib:CreateWindow("render",UDim2.new(0.62, 0, 0.1, 0),"15090679835")
 Utility = lib:CreateWindow("utility",UDim2.new(0.82, 0, 0.1, 0),"15090688384")
 Client = lib:CreateWindow("client",UDim2.new(0.435, 0, 0.4, 0),"15090649788")
+print("[RavenBS] Client window created:", Client ~= nil)
+print("[RavenBS] Client.CreateToggle exists?", Client.CreateToggle ~= nil)
+
 Exploit = lib:CreateWindow("exploits",UDim2.new(0.82, 0, 0.8, 0),"15090649788")
+print("[RavenBS] All windows created")
+
 GUIToggle = Client:CreateToggle({
     Name = "GUI",
     Animation = false,
@@ -1793,7 +1859,11 @@ GUIToggle = Client:CreateToggle({
         lib:ToggleLib()
     end
 })
+print("[RavenBS] GUIToggle created:", GUIToggle ~= nil)
+
 GUIToggle:CreateInfo("All GUI modules in one place!")
+print("[RavenBS] About to create Theme dropdown, Usedlist:", Usedlist)
+
 GUIToggle:CreateDropDown({
     Name = "Theme",
     DefaultOption = Usedlist[1],

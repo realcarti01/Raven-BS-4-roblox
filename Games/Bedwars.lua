@@ -72,9 +72,13 @@ local swordAnimation = Instance.new("Animation")
 swordAnimation.AnimationId = "rbxassetid://4947108314"
 
 local loop = LoopManager.new()
+print("[RavenBS Bedwars] Creating Killaura toggle, Combat object:", Combat, "exists?", Combat ~= nil)
+print("[RavenBS Bedwars] Combat.CreateToggle:", Combat.CreateToggle, "exists?", Combat.CreateToggle ~= nil if Combat else "Combat is nil")
+
 Killaura = Combat:CreateToggle({
 	Name = "Killaura",
 	Callback = function(Callback)
+		print("[RavenBS Bedwars] Killaura toggled:", Callback)
 		if Callback then
 			local selfroot = nil
 			local sword = nil
@@ -203,6 +207,7 @@ Killaura = Combat:CreateToggle({
 	end
 })
 Killaura:CreateInfo("Hits Players Around you")
+print("[RavenBS Bedwars] Creating Killaura Mode dropdown")
 Killaura:CreateDropDown({
 	Name = "Mode",
 	DefaultOption = "Health",
@@ -212,23 +217,29 @@ Killaura:CreateDropDown({
 		"Health",
 	},
 	Callback = function(Callback)
+		print("[RavenBS Bedwars] Killaura Mode changed to:", Callback)
 		Targetoptions = Callback
 	end
 })
+print("[RavenBS Bedwars] Killaura Mode dropdown created")
+
 local killauraanimationarray = {
 	"Normal"
 }
 for i, v in next, SwordAnimations do
 	table.insert(killauraanimationarray, i)
 end
+print("[RavenBS Bedwars] Creating Killaura Animation dropdown with", #killauraanimationarray, "options")
 Killaura:CreateDropDown({
 	Name = "Animation",
 	DefaultOption = "Remade",
 	Options = killauraanimationarray,
 	Callback = function(Callback)
+		print("[RavenBS Bedwars] Killaura Animation changed to:", Callback)
 		AnimationOptionsKillaura = Callback
 	end
 })
+print("[RavenBS Bedwars] Killaura Animation dropdown created")
 Killaura:CreateToggle({
 	Name = "Locked View",
 	Callback = function(Callback)
