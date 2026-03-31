@@ -1,15 +1,3 @@
---[[
-██████╗  █████╗ ██╗   ██╗███████╗███╗   ██╗    ██████╗ ██╗  ██╗
-██╔══██╗██╔══██╗██║   ██║██╔════╝████╗  ██║    ██╔══██╗██║  ██║
-██████╔╝███████║██║   ██║█████╗  ██╔██╗ ██║    ██████╔╝███████║
-██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║    ██╔══██╗╚════██║
-██║  ██║██║  ██║ ╚████╔╝ ███████╗██║ ╚████║    ██████╔╝     ██║
-╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝    ╚═════╝      ╚═╝
-Author: Ace (or Ace-B4)
-Language: Lua
-Category: GUI
-]]
-
 -- Services initialization
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -1021,7 +1009,6 @@ Render:CreateToggle({
 	end
 })
 local ConnectionSlowdown = nil
---[[
 NoSlow = Utility:CreateToggle({
 	Name = "No Slow",
 	Callback = function(Callback)
